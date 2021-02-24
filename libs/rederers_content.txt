@@ -1,0 +1,61 @@
+
+//#och5p_core
+//added by local_och5p_core - please do not remove it manually
+if (file_exists($CFG->dirroot . '/h5p/classes/output/renderer.php')) {
+    // Be sure to include the H5P renderer so it can be extended
+    require_once($CFG->dirroot . '/h5p/classes/output/renderer.php');
+    
+    /**
+    * Class local_och5p_core_h5p_renderer
+    *
+    * Extends the H5P renderer so that we are able to override the relevant
+    * functions declared there
+    */
+    class local_och5p_core_h5p_renderer extends core_h5p\output\renderer {
+        
+        /**
+        * Add styles when an H5P is displayed.
+        *
+        * @param array $styles Styles that will be applied.
+        * @param array $libraries Libraries that wil be shown.
+        * @param string $embedType How the H5P is displayed.
+        */
+        public function h5p_alter_styles(&$styles, $libraries, $embedType) {
+            global $CFG;
+            if (
+                isset($libraries['H5P.InteractiveVideo']) &&
+                $libraries['H5P.InteractiveVideo']['majorVersion'] == '1'
+            ) {
+                $styles[] = (object) array(
+                    'path'    => $CFG->httpswwwroot . '/local/och5p_core/style/H5PEditor.AV.css',
+                    'version' => '?ver=0.0.1',
+                );
+                $styles[] = (object) array(
+                    'path'    => $CFG->httpswwwroot . '/local/och5p_core/style/oc-fonts.css',
+                    'version' => '?ver=0.0.1',
+                );
+            }
+        }
+            
+        /**
+        * Add scripts when an H5P is displayed.
+        *
+        * @param object $scripts Scripts that will be applied.
+        * @param array $libraries Libraries that will be displayed.
+        * @param string $embedType How the H5P is displayed.
+        */
+        public function h5p_alter_scripts(&$scripts, $libraries, $embedType) {
+            global $PAGE, $CFG, $COURSE;
+            if (
+                isset($libraries['H5P.InteractiveVideo']) &&
+                $libraries['H5P.InteractiveVideo']['majorVersion'] == '1'
+            ) {
+                $scripts[] = (object) array(
+                    'path'    => $CFG->httpswwwroot . '/local/och5p_core/js/H5PEditor.AV.js',
+                    'version' => '?ver=0.0.1',
+                );
+            }
+        }
+    }
+}
+//#end_och5p_core

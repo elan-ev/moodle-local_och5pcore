@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'opencast';
+    src: url('icon/opencast.eot');
+    src: url('icon/opencast.eot?#iefix') format('embedded-opentype'),
+         url('icon/opencast.woff') format('woff'),
+         url('icon/opencast.ttf') format('truetype'),
+         url('icon/opencast.svg#opencast') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

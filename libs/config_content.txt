@@ -1,0 +1,4 @@
+//#och5p_core
+//added by local_och5p_core - please do not remove it manually
+$THEME->rendererfactory = 'theme_overridden_renderer_factory';
+//#end_och5p_core
