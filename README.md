@@ -8,11 +8,11 @@ Using this integration now enables teachers to select opencast videos in a cours
 
 System requirements
 ------------------
-* Min. Moodle Version: 3.10
-* Installed plugin:
-** <a href="https://github.com/Opencast-Moodle/moodle-tool_opencast">tool_opencast</a> (Min. version:<a href="https://github.com/Opencast-Moodle/moodle-tool_opencast/releases/tag/v3.11-r3">v3.11-r3</a>)
-** <a href="https://github.com/Opencast-Moodle/moodle-block_opencast">block_opencast</a> (Min. version:<a href="https://github.com/Opencast-Moodle/moodle-block_opencast/releases/tag/v3.11-r3">v3.11-r3</a>)
-IMPORTANT: You should update the tool_opencast first because otherwise the block_opencast installation will fail.
+1. Min. Moodle Version: 3.10
+2. Installed plugin:
+   - <a href="https://github.com/Opencast-Moodle/moodle-tool_opencast">tool_opencast</a> (Min. version: <a href="https://github.com/Opencast-Moodle/moodle-tool_opencast/releases/tag/v3.11-r3">v3.11-r3</a>)
+   - <a href="https://github.com/Opencast-Moodle/moodle-block_opencast">block_opencast</a> (Min. version: <a href="https://github.com/Opencast-Moodle/moodle-block_opencast/releases/tag/v3.11-r3">v3.11-r3</a>)
+   - IMPORTANT: You should update the tool_opencast first because otherwise the block_opencast installation will fail.
 
 Pre-Requisites
 ------------------
