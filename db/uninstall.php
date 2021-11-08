@@ -16,21 +16,20 @@
 
 /**
  * 
- * @package    local_och5p_core
+ * @package    local_och5pcore
  * @copyright  2021 Farbod Zamani Boroujeni, ELAN e.V.
  * @author     Farbod Zamani Boroujeni <zamani@elan-ev.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die;
 
-function xmldb_local_och5p_core_uninstall() {
-    global $CFG, $DB;
+use local_och5pcore\local\theme_manager;
 
-    require_once($CFG->dirroot . '/local/och5p_core/och5p_core.php');
+function xmldb_local_och5pcore_uninstall() {
 
-    $themes = \core_component::get_plugin_list('theme'); 
-    if (count($themes)) {
-        och5p_core_unenxtend_themes(array_keys($themes));
+    $themes = core_component::get_plugin_list('theme'); 
+    if (count($themes) > 0) {
+        theme_manager::remove_themes_extension(array_keys($themes));
     }
 
     return true;

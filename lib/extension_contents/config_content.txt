@@ -1,0 +1,3 @@
+// Added by local_och5pcore plugin - please do not remove it manually.
+$THEME->rendererfactory = 'theme_overridden_renderer_factory';
+// End of local_och5pcore code block.

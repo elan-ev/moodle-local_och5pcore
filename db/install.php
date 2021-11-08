@@ -16,20 +16,21 @@
 
 /**
  * 
- * @package    local_och5p_core
+ * @package    local_och5pcore
  * @copyright  2021 Farbod Zamani Boroujeni, ELAN e.V.
  * @author     Farbod Zamani Boroujeni <zamani@elan-ev.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 defined('MOODLE_INTERNAL') || die;
 
-$string['pluginname'] = 'H5P Opencast Extension (Core)';
-$string['och5p_core'] = 'H5P Opencast Extension (Core)';
-$string['local/och5p_core'] = 'H5P Opencast Extension (Core)';
-$string['local_och5p_core'] = 'H5P Opencast Extension (Core)';
-$string['title_settings'] = 'H5P Opencast Extension (Core) - Settings';
-$string['setting_extended_themes'] = 'Extended Themes';
-$string['setting_extended_themes_desc'] = 'The seleced themes will be extended to provide Opencast Videos in H5P.';
-$string['extended_error'] = 'Unable to extend theme(s): %s';
-$string['flavor:presenter'] = 'Presenter';
-$string['flavor:presentation'] = 'Presentation';
+use local_och5pcore\local\theme_manager;
+
+/**
+ * To clean up old version extensions.
+ */
+function xmldb_local_och5pcore_install() {
+    // Due to changing the pluginname and flags,
+    // it is designed to remove the codes and extensions of the old versions.
+    theme_manager::cleaup_themes_extension();
+}

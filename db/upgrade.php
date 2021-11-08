@@ -21,15 +21,24 @@
  * @author     Farbod Zamani Boroujeni <zamani@elan-ev.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-defined('MOODLE_INTERNAL') || die;
 
-// Defining this plug-in metadata.
-$plugin->component = 'local_och5pcore';
-$plugin->release = '2.0.0';
-$plugin->version =  2021110800;
-$plugin->maturity = MATURITY_STABLE;
-$plugin->requires = 2020110900; // Only Moodle v3.10 and above.
-$plugin->dependencies = [
-    'tool_opencast' => 2021091200, // Opencast admin tool (with multi-instances feature)
-    'block_opencast' => 2021091200 // Opencast Video Block (with multi-series feature)
-];
+defined('MOODLE_INTERNAL') || die();
+
+use local_och5pcore\local\theme_manager;
+
+/**
+ * Execute och5pcore upgrade from the given old version
+ *
+ * @param int $oldversion
+ * @return bool
+ */
+function xmldb_local_och5pcore_upgrade($oldversion) {
+    if ($oldversion < 2021110800) {
+        // Due to changing the pluginname and flags,
+        // it is designed to remove the codes and extensions of the old versions.
+        theme_manager::cleaup_themes_extension();
+
+        // Because there is no DB changes, therefore we don't use savepoint here.
+    }
+    return true;
+}
