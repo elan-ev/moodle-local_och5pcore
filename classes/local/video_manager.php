@@ -42,10 +42,10 @@ class video_manager
 {
     /**
      * Get opencast course videos and prepare it to show in dropdown with option tag.
-     * 
+     *
      * @param int $courseid course id
      * @return array option list of opencast course videos
-     * @throws moodle_exception 
+     * @throws moodle_exception
      */
     public static function prepare_course_videos($courseid) {
         // Get the course videos.
@@ -69,7 +69,7 @@ class video_manager
     }
 
     /**
-     * Extracts video's qualities from opencast video metadata catalog. 
+     * Extracts video's qualities from opencast video metadata catalog.
      *
      * @param string $identifier opencast video identifier
      * @return array option list of opencast course videos
@@ -85,7 +85,9 @@ class video_manager
         foreach ($sortedvideos as $flavor => $qualities) {
             // Extract type and mime from the item.
             $obj = array();
-            $obj['type']      = ((strpos($flavor, 'presenter/delivery') !== FALSE) ? get_string('flavor:presenter', 'local_och5pcore') : get_string('flavor:presentation', 'local_och5pcore'));
+            $obj['type'] = ((strpos($flavor, 'presenter/delivery') !== false) ?
+                get_string('flavor:presenter', 'local_och5pcore') :
+                get_string('flavor:presentation', 'local_och5pcore'));
             preg_match('#\((.*?)\)#', $flavor, $match);
             $obj['mime']      = str_replace('video/', '', $match[1]);
 
@@ -96,13 +98,18 @@ class video_manager
             $optionvalue = array();
             $qualitiesarray = array();
             foreach ($qualities as $quality => $video) {
-                $qualitydatastring = '{"quality": "' . $quality . '", "url": "' . $video['url'] . '", "mime": "' . $match[1] . '", "id": "' . $video['id'] . '", "identifier": "' . $identifier . '"}';
+                $qualitydatastring = '{"quality": "' . $quality . '", "url": "' . $video['url'] .
+                    '", "mime": "' . $match[1] . '", "id": "' . $video['id'] .
+                    '", "identifier": "' . $identifier . '"}';
                 $qualitiesarray[] = $qualitydatastring;
                 $optionvalue[] = $video['id'];
             }
-            
+
             // Insert all data into an option tag and put into the array.
-            $options[] = "<option data-info='{\"qualities\" : [" . implode(', ', $qualitiesarray) . "]}' value='" . implode('&&', $optionvalue) . "'> $optiontext </option>";
+            $options[] = "<option data-info='{\"qualities\" : [" .
+                implode(', ', $qualitiesarray) . "]}' value='" .
+                implode('&&', $optionvalue) .
+                "'> $optiontext </option>";
         }
 
         // Finally, we return the options array.
@@ -110,12 +117,11 @@ class video_manager
     }
 
     /**
-    * Provides a list of enrolled courses for the user as option tags.
-    * It is used to provide extra feature for admins to access their courses from global content bank.
-    *
-    * @return array option list of user enrolled courses
-    * @throws moodle_exception 
-    */
+     * Provides a list of enrolled courses for the user as option tags.
+     * It is used to provide extra feature for admins to access their courses from global content bank.
+     * @return array option list of user enrolled courses.
+     * @throws moodle_exception
+     */
     public static function get_course_lists() {
         global $USER;
 

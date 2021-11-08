@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * 
+ *
  * @package    local_och5pcore
  * @copyright  2021 Farbod Zamani Boroujeni, ELAN e.V.
  * @author     Farbod Zamani Boroujeni <zamani@elan-ev.de>
@@ -26,10 +26,10 @@ defined('MOODLE_INTERNAL') || die;
 // Defining this plug-in metadata.
 $plugin->component = 'local_och5pcore';
 $plugin->release = '2.0.0';
-$plugin->version =  2021110800;
+$plugin->version = 2021110800;
 $plugin->maturity = MATURITY_STABLE;
 $plugin->requires = 2020110900; // Only Moodle v3.10 and above.
 $plugin->dependencies = [
-    'tool_opencast' => 2021091200, // Opencast admin tool (with multi-instances feature)
-    'block_opencast' => 2021091200 // Opencast Video Block (with multi-series feature)
+    'tool_opencast' => 2021091200, // Opencast admin tool (with multi-instances feature).
+    'block_opencast' => 2021091200 // Opencast Video Block (with multi-series feature).
 ];

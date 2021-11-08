@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * 
+ *
  * @package    local_och5pcore
  * @copyright  2021 Farbod Zamani Boroujeni, ELAN e.V.
  * @author     Farbod Zamani Boroujeni <zamani@elan-ev.de>
@@ -27,7 +27,7 @@ use local_och5pcore\local\theme_manager;
 
 function xmldb_local_och5pcore_uninstall() {
 
-    $themes = core_component::get_plugin_list('theme'); 
+    $themes = core_component::get_plugin_list('theme');
     if (count($themes) > 0) {
         theme_manager::remove_themes_extension(array_keys($themes));
     }

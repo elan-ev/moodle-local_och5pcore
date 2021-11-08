@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * 
+ *
  * @package    local_och5pcore
  * @copyright  2021 Farbod Zamani Boroujeni, ELAN e.V.
  * @author     Farbod Zamani Boroujeni <zamani@elan-ev.de>
@@ -47,7 +47,7 @@ list($context, $course, $cm) = get_context_info_array($contextid);
 
 if (!$context && $course) {
     $context = context_course::instance($course->id);
-} else if ($context && !$course && $courseid) { //Global content bank
+} else if ($context && !$course && $courseid) { // Global content bank.
     $context = context_course::instance($courseid);
     $course = \get_course($courseid);
 }
@@ -62,10 +62,10 @@ if (is_null($coursecontext) || !has_capability('block/opencast:viewunpublishedvi
 header('Cache-Control: no-cache');
 header('Content-Type: application/json; charset=utf-8');
 
-//Validate token.
+// Validate token.
 try {
-    $H5PFactory = new factory();
-    $editor = $H5PFactory->get_editor();
+    $h5pfactory = new factory();
+    $editor = $h5pfactory->get_editor();
     if ($action != 'ltiParams' && !$editor->ajaxInterface->validateEditorToken(required_param('token', PARAM_RAW))) {
         print json_encode(['error' => get_string('invalidtoken_error', 'local_och5pcore')]);
         die;
@@ -106,7 +106,7 @@ switch ($action) {
         } catch (moodle_exception $e) {
             $data['error'] = $e->getMessage();
         }
-        break;   
+        break;
     default:
         $data['error'] = get_string('no_action_error', 'local_och5pcore');
         break;

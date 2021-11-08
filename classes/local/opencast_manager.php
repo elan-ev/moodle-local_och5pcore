@@ -48,7 +48,7 @@ class opencast_manager
 {
     /**
      * Get Opencast Instances.
-     * 
+     *
      * @return array opencast instances.
      */
     public static function get_ocinstances() {
@@ -62,8 +62,12 @@ class opencast_manager
         $ocinstancenames = [];
         // Loop through each opencast instance to prepare a consumable array format.
         foreach ($ocinstances as $ocinstanceconfig) {
-            $name = (!empty($ocinstanceconfig->name)) ? $ocinstanceconfig->name : get_string('setting_opencast_instance_default_name_option', 'local_och5pcore');
-            $default = ($ocinstanceconfig->isdefault) ? ' (' . get_string('setting_opencast_instance_default_indicator', 'local_och5pcore') . ')' : '';
+            $name = (!empty($ocinstanceconfig->name)) ?
+                $ocinstanceconfig->name :
+                get_string('setting_opencast_instance_default_name_option', 'local_och5pcore');
+            $default = ($ocinstanceconfig->isdefault) ?
+                ' (' . get_string('setting_opencast_instance_default_indicator', 'local_och5pcore') . ')' :
+                '';
             $ocinstancenames[$ocinstanceconfig->id] = "$name (ID:{$ocinstanceconfig->id})$default";
         }
 
@@ -72,7 +76,7 @@ class opencast_manager
 
     /**
      * Get Default Opencast Instance.
-     * 
+     *
      * @return int default opencast instance id.
      */
     public static function get_default_ocinstance() {
@@ -84,7 +88,7 @@ class opencast_manager
     /**
      * Get the ocinstance config for search endpoint. It double checks if the id still exists.
      * In case the id is not available anymore, it uses the default opencsat instance id.
-     * 
+     *
      * @return int ocinstanceid the id of configured opencsat intance.
      */
     public static function get_configured_search_opencast_instance() {
@@ -106,10 +110,10 @@ class opencast_manager
 
     /**
      * Get videos avaialble in the course.
-     * 
+     *
      * @param int $courseid the id of the course.
-     * 
-     * @return array the list of opencast course videos. 
+     *
+     * @return array the list of opencast course videos.
      */
     public static function get_course_videos($courseid) {
         // Get an instance of apibridge.
@@ -124,7 +128,7 @@ class opencast_manager
         $seriesvideos = [];
         $haserror = 0;
 
-        foreach($courseseries as $series) {
+        foreach ($courseseries as $series) {
             // Get videos of each series.
             $videos = $apibridge->get_series_videos($series->series);
 
@@ -152,18 +156,18 @@ class opencast_manager
 
     /**
      * Get videos avaialble in the course.
-     * 
+     *
      * @param string $identifier the opencast event (video) identifier.
-     * 
-     * @return array the list of consumable opencast events tracks. 
+     *
+     * @return array the list of consumable opencast events tracks.
      */
     public static function get_episode_tracks($identifier) {
         // Get the opencast instance for the search endpoint.
         $searchocinstanceid = self::get_configured_search_opencast_instance();
 
-        // Instantiate the api class from tool_opencast
+        // Get api instance from tool_opencast.
         $api = api::get_instance($searchocinstanceid);
-        
+
         // Prepare the endpoint url.
         $url = '/search/episode.json?id=' . $identifier;
 
@@ -176,7 +180,9 @@ class opencast_manager
         }
 
         // Extract the tracks from mediapackage.
-        $tracks = (isset($searchresult['search-results']['result']) ? $searchresult['search-results']['result']['mediapackage']['media']['track'] : null);
+        $tracks = (isset($searchresult['search-results']['result']) ?
+            $searchresult['search-results']['result']['mediapackage']['media']['track'] :
+            null);
 
         // If tracks does not exists, we return moodle_exception.
         if (!$tracks) {
@@ -186,25 +192,25 @@ class opencast_manager
         $videotracks = [];
         // If there is video key inside the tracks array, that means it is a single track.
         if (array_key_exists('video', $tracks)) {
-            if (strpos($tracks['mimetype'], 'video') !== FALSE) {
+            if (strpos($tracks['mimetype'], 'video') !== false) {
                 $videotracks[] = $tracks;
             }
         } else {
             // Otherwise, there are more than one track.
             // Extract videos from tracks.
             $videotracks = array_filter($tracks, function($track) {
-                return strpos($track['mimetype'], 'video') !== FALSE;
+                return strpos($track['mimetype'], 'video') !== false;
             });
         }
-        
 
-        // Initialise the sorted videos array. 
+
+        // Initialise the sorted videos array.
         $sortedvideos = array();
 
-        foreach ($videotracks as $videotrack ) {
+        foreach ($videotracks as $videotrack) {
 
             // Double check if the track is 100% video track.
-            if (strpos($videotrack['mimetype'], 'video') === FALSE) {
+            if (strpos($videotrack['mimetype'], 'video') === false) {
                 continue;
             }
 
@@ -212,15 +218,16 @@ class opencast_manager
 
             if (isset($videotrack['tags'])) {
                 foreach ($videotrack['tags']['tag'] as $tag) {
-                    if (strpos($tag, 'quality') !== FALSE && empty($quality)) {
+                    if (strpos($tag, 'quality') !== false && empty($quality)) {
                         $quality = str_replace('-quality', '', $tag);
                     }
                 }
             } else if (isset($videotrack['video']) && isset($videotrack['video']['resolution'])) {
                 $quality = $videotrack['video']['resolution'];
-            } 
+            }
 
-            $sortedvideos["{$videotrack['type']} ({$videotrack['mimetype']})"][$quality] = ["id" => $videotrack['id'], "url" => $videotrack['url']];
+            $sortedvideos["{$videotrack['type']} ({$videotrack['mimetype']})"][$quality] =
+                ["id" => $videotrack['id'], "url" => $videotrack['url']];
         }
 
         return $sortedvideos;
@@ -228,7 +235,7 @@ class opencast_manager
 
     /**
      * Gets LTI parameters to perform the LTI authentication.
-     * 
+     *
      * @param int $courseid id of the course.
      * @return array lti parameters.
      */
@@ -241,10 +248,10 @@ class opencast_manager
         // Get configured consumerkey and consumersecret.
         $consumerkey = get_config('local_och5pcore', 'lticonsumerkey');
         $consumersecret = get_config('local_och5pcore', 'lticonsumersecret');
-    
+
         // Get the opencast instance for the search endpoint.
         $searchocinstanceid = self::get_configured_search_opencast_instance();
-        
+
         // Get the endpoint url of the search instance.
         $endpoint = get_config('tool_opencast', 'apiurl_' . $searchocinstanceid);
 
@@ -263,17 +270,17 @@ class opencast_manager
             $endpoint = 'http://' . $endpoint;
         }
         $endpoint .= '/lti';
-    
+
         $helper = new oauth_helper(array('oauth_consumer_key'    => $consumerkey,
                                         'oauth_consumer_secret' => $consumersecret));
-    
-        // // Set all necessary parameters.
+
+        // Set all necessary parameters.
         $params = array();
         $params['oauth_version'] = '1.0';
         $params['oauth_nonce'] = $helper->get_nonce();
         $params['oauth_timestamp'] = $helper->get_timestamp();
         $params['oauth_consumer_key'] = $consumerkey;
-    
+
         $params['context_id'] = $course->id;
         $params['context_label'] = trim($course->shortname);
         $params['context_title'] = trim($course->fullname);
@@ -290,7 +297,7 @@ class opencast_manager
         $urlparts = parse_url($CFG->wwwroot);
         $params['tool_consumer_instance_guid'] = $urlparts['host'];
         $params['custom_tool'] = '/ltitools';
-    
+
         // User data.
         $params['user_id'] = $USER->id;
         $params['lis_person_name_given'] = $USER->firstname;
@@ -299,17 +306,17 @@ class opencast_manager
         $params['ext_user_username'] = $USER->username;
         $params['lis_person_contact_email_primary'] = $USER->email;
         $params['roles'] = lti_get_ims_role($USER, null, $course->id, false);
-    
+
         if (!empty($CFG->mod_lti_institution_name)) {
             $params['tool_consumer_instance_name'] = trim(html_to_text($CFG->mod_lti_institution_name, 0));
         } else {
             $params['tool_consumer_instance_name'] = get_site()->shortname;
         }
-    
+
         $params['launch_presentation_document_target'] = 'iframe';
         $params['oauth_signature_method'] = 'HMAC-SHA1';
         $params['oauth_signature'] = $helper->sign("POST", $endpoint, $params, $consumersecret . '&');
-    
+
         // Additional params.
         $params['endpoint'] = $endpoint;
         return $params;

@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * 
+ *
  * @package    local_och5pcore
  * @copyright  2021 Farbod Zamani Boroujeni, ELAN e.V.
  * @author     Farbod Zamani Boroujeni <zamani@elan-ev.de>
@@ -39,7 +39,7 @@ if ($hassiteconfig) {
         new admin_setting_heading('local_och5pcore/extended_themes_header',
             get_string('setting_extended_themes_header', 'local_och5pcore'),
         ''));
-    
+
     $availablethemes = array();
 
     foreach (\core_component::get_plugin_list('theme') as $name => $dir) {
@@ -50,7 +50,7 @@ if ($hassiteconfig) {
         'local_och5pcore/extended_themes',
         get_string('setting_extended_themes', 'local_och5pcore'),
         get_string('setting_extended_themes_desc', 'local_och5pcore'),
-        array(), 
+        array(),
         $availablethemes
     );
 
@@ -63,7 +63,7 @@ if ($hassiteconfig) {
             get_string('setting_search_endpoint_header', 'local_och5pcore'),
             ''
         ));
-    
+
     $choices = opencast_manager::get_ocinstances();
     $default = opencast_manager::get_default_ocinstance();
     $ocinstancesetting = new admin_setting_configselect('local_och5pcore/searchocinstance',
