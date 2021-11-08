@@ -1,6 +1,6 @@
 moodle-block_och5pcore
 =====================
-This local plugin can be used to integrate Opencast Video into the Moolde H5P core.
+This local plugin helps to integrate Opencast Video into the Moodle H5P core.
 The main porpuse of this plugin is to make it possible for the teachers to select Opencast Video from within the H5P Editor when using H5P Interactive Videos feature.
 In order to acheive this goal, it is neccessary to customize Moodle H5P core, which is only possible through extending a theme in Moodle <a href="https://h5p.org/moodle-customization">Moodle Customization</a>. From Moodle 3.10 onwards the H5P Core has the ability to alter H5P via overriding the renderes and hooks <a href="https://tracker.moodle.org/browse/MDL-69087">MDL-69087</a> to add customized scripts and styles into H5P.
 This plugin is designed to overwrite the renderer.php and config.php files of the selected themes and append the necessary codes into these files. This design helps to adapt every installed themes instead of only extending a specific theme.
@@ -26,7 +26,7 @@ Features
 * Extract and display Opencast video flavors inside H5P Interactive Videos Editor
 * Extract and use different quality of the Opencast video inside H5P Interactive Videos
 * Opencast LTI authentication (v2.0.0)
-* Different Opencast intance selection for search endpoint via (tool_opencast v3.11-r3 and above) (v2.0.0)
+* Different Opencast instance selection for search endpoint via (tool_opencast v3.11-r3 and above) (v2.0.0)
 
 Settings
 ------------------
