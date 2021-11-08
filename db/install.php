@@ -15,7 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- *
+ * Local och5pcore installtion.
+ *  
  * @package    local_och5pcore
  * @copyright  2021 Farbod Zamani Boroujeni, ELAN e.V.
  * @author     Farbod Zamani Boroujeni <zamani@elan-ev.de>
@@ -27,7 +28,7 @@ defined('MOODLE_INTERNAL') || die;
 use local_och5pcore\local\theme_manager;
 
 /**
- * To clean up old version extensions.
+ * Call the functions and methods during install.
  */
 function xmldb_local_och5pcore_install() {
     // Due to changing the pluginname and flags,

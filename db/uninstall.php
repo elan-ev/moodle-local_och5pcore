@@ -15,6 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Local och5pcore uninstall process.
  *
  * @package    local_och5pcore
  * @copyright  2021 Farbod Zamani Boroujeni, ELAN e.V.
@@ -25,6 +26,9 @@ defined('MOODLE_INTERNAL') || die;
 
 use local_och5pcore\local\theme_manager;
 
+/**
+ * Call the functions and methods during uninstall.
+ */
 function xmldb_local_och5pcore_uninstall() {
 
     $themes = core_component::get_plugin_list('theme');

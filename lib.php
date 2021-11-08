@@ -15,6 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Plugin function library.
  *
  * @package    local_och5pcore
  * @copyright  2021 Farbod Zamani Boroujeni, ELAN e.V.
@@ -26,6 +27,9 @@ use local_och5pcore\local\theme_manager;
 
 defined('MOODLE_INTERNAL') || die;
 
+/**
+ * Extends and unextends the themes based on the theme selcetion in admi n setting.
+ */
 function local_och5pcore_extend_themes() {
 
     $returnurl = new moodle_url('/admin/settings.php?section=local_och5pcore_settings');
