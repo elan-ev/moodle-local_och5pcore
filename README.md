@@ -1,4 +1,4 @@
-moodle-block_och5pcore
+moodle-local_och5pcore
 =====================
 This local plugin helps to integrate Opencast Video into the Moodle H5P core.
 The main porpuse of this plugin is to make it possible for the teachers to select Opencast Video from within the H5P Editor when using H5P Interactive Videos feature.
