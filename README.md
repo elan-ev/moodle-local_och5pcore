@@ -26,14 +26,14 @@ Features
 * Extract and display Opencast video flavors inside H5P Interactive Videos Editor
 * Extract and use different quality of the Opencast video inside H5P Interactive Videos
 * Opencast LTI authentication (v2.0.0)
-* Different Opencast instance selection for search endpoint via (tool_opencast v3.11-r3 and above) (v2.0.0)
+* Getting search endpoint (Engage/Presentation node) from Opencast services (v2.1)
 
 Settings
 ------------------
 * In Admin Settings Page, there is the possibility to select multiple available themes to extend.
 * Unselecting a theme will remove the extension changes.
 * Only videos which are published to opencast engage player, can be displayed and process, because media index of the event must be available.
-* Opencast instance for the search endpoint must be configured in tool_opencast and be selected in the setting.
+* Opencast instance for the search endpoint must be configured in tool_opencast and be selected in the setting. (Deprecated in v2.1)
 * LTI credential can be configured if the "Secure Static Files" in opencast setting is enabled.
 
 Uninstall
