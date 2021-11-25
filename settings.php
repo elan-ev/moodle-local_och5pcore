@@ -58,21 +58,6 @@ if ($hassiteconfig) {
     $extendedthemessetting->set_updatedcallback('local_och5pcore_extend_themes');
     $settings->add($extendedthemessetting);
 
-    // Search Endpoint Connectivity Section.
-    $settings->add(
-        new admin_setting_heading('local_och5pcore/search_endpoint_header',
-            get_string('setting_search_endpoint_header', 'local_och5pcore'),
-            ''
-        ));
-
-    $choices = opencast_manager::get_ocinstances();
-    $default = opencast_manager::get_default_ocinstance();
-    $ocinstancesetting = new admin_setting_configselect('local_och5pcore/searchocinstance',
-        get_string('setting_opencast_instance', 'local_och5pcore'),
-        get_string('setting_opencast_instance_desc', 'local_och5pcore'),
-        $default, $choices);
-    $settings->add($ocinstancesetting);
-
     // LTI Module Section.
     $settings->add(
         new admin_setting_heading('local_och5pcore/lti_header',

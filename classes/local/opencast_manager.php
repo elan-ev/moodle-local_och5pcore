@@ -47,68 +47,6 @@ require_once($CFG->dirroot . '/lib/oauthlib.php');
 class opencast_manager
 {
     /**
-     * Get Opencast Instances.
-     *
-     * @return array opencast instances.
-     */
-    public static function get_ocinstances() {
-        // Get all opencast instances.
-        $ocinstances = settings_api::get_ocinstances();
-        // Return empty array, if nothing's found.
-        if (empty($ocinstances)) {
-            return [];
-        }
-
-        $ocinstancenames = [];
-        // Loop through each opencast instance to prepare a consumable array format.
-        foreach ($ocinstances as $ocinstanceconfig) {
-            $name = (!empty($ocinstanceconfig->name)) ?
-                $ocinstanceconfig->name :
-                get_string('setting_opencast_instance_default_name_option', 'local_och5pcore');
-            $default = ($ocinstanceconfig->isdefault) ?
-                ' (' . get_string('setting_opencast_instance_default_indicator', 'local_och5pcore') . ')' :
-                '';
-            $ocinstancenames[$ocinstanceconfig->id] = "$name (ID:{$ocinstanceconfig->id})$default";
-        }
-
-        return $ocinstancenames;
-    }
-
-    /**
-     * Get Default Opencast Instance.
-     *
-     * @return int default opencast instance id.
-     */
-    public static function get_default_ocinstance() {
-        // Get the default instance object.
-        $ocdefaultinstance = settings_api::get_default_ocinstance();
-        // Return the id of the instance, if empty only return 1 refering to the first instance.
-        return (empty($ocdefaultinstance)) ? 1 : $ocdefaultinstance->id;
-    }
-    /**
-     * Get the ocinstance config for search endpoint. It double checks if the id still exists.
-     * In case the id is not available anymore, it uses the default opencsat instance id.
-     *
-     * @return int ocinstanceid the id of configured opencsat intance.
-     */
-    public static function get_configured_search_opencast_instance() {
-        // Initialized the search instance with default id.
-        $searchocinstanceid = self::get_default_ocinstance();
-        // Get config.
-        $configedocinstanceid = get_config('local_och5pcore', 'searchocinstance');
-        // Get the list.
-        $ocinstances = self::get_ocinstances();
-        // Loop though to check if the config instance exists.
-        foreach ($ocinstances as $id => $name) {
-            if ($id == $configedocinstanceid) {
-                $searchocinstanceid = $configedocinstanceid;
-            }
-        }
-
-        return intval($searchocinstanceid);
-    }
-
-    /**
      * Get videos avaialble in the course.
      *
      * @param int $courseid the id of the course.
@@ -162,11 +100,8 @@ class opencast_manager
      * @return array the list of consumable opencast events tracks.
      */
     public static function get_episode_tracks($identifier) {
-        // Get the opencast instance for the search endpoint.
-        $searchocinstanceid = self::get_configured_search_opencast_instance();
-
-        // Get api instance from tool_opencast.
-        $api = api::get_instance($searchocinstanceid);
+        // Get tool_opencast api instance for search service.
+        $api = self::get_opencast_search_service_api_instance();
 
         // Prepare the endpoint url.
         $url = '/search/episode.json?id=' . $identifier;
@@ -233,6 +168,51 @@ class opencast_manager
         return $sortedvideos;
     }
 
+
+    /**
+     * Get api instance from tool_opencast for search service.
+     *
+     * @return tool_opencast\local\api opencast api instance.
+     */
+    public static function get_opencast_search_service_api_instance() {
+        // Get api instance from tool_opencast.
+        $api = api::get_instance();
+
+        // Services endpoint initialization.
+        $servicesurl = '/services/services.json';
+
+        // Make a get call to default oc instance to receive services.
+        $result = json_decode($api->oc_get($servicesurl), true);
+
+        // Check if the get call returns any services, if not we return the default oc instance api.
+        if (!isset($result['services']['service']) || empty($result['services']['service'])) {
+            return $api;
+        }
+
+        // Get the services array from the get call.
+        $services = $result['services']['service'];
+        // Get the index of the search service. 
+        $searchserviceindex = array_search('/search', array_column($services, 'path'));
+        // Extract the search service array, if exists.
+        $searchservice = (isset($services[$searchserviceindex])) ? $services[$searchserviceindex] : null;
+
+        // Check if the search service is active and online to make calls.
+        if (!empty($searchservice) && $searchservice['active'] && $searchservice['online']) {
+            // Initialize the custom configs with the search service's host.
+            $customconfigs = [
+                'apiurl' => preg_replace(["/\/docs/"], [''], $searchservice['host']),
+                'apiusername' => get_config('tool_opencast', 'apiusername'),
+                'apipassword' => get_config('tool_opencast', 'apipassword'),
+                'apitimeout' => get_config('tool_opencast', 'apitimeout'),
+            ];
+            // Create the tool_opencast api instance with search service's host url.
+            $api = api::get_instance(null, [], $customconfigs);
+        }
+
+        // Finally, we return the tool_opencast api instance to make search calls.
+        return $api;
+    }
+
     /**
      * Gets LTI parameters to perform the LTI authentication.
      *
@@ -249,16 +229,8 @@ class opencast_manager
         $consumerkey = get_config('local_och5pcore', 'lticonsumerkey');
         $consumersecret = get_config('local_och5pcore', 'lticonsumersecret');
 
-        // Get the opencast instance for the search endpoint.
-        $searchocinstanceid = self::get_configured_search_opencast_instance();
-
-        // Get the endpoint url of the search instance.
-        $endpoint = get_config('tool_opencast', 'apiurl_' . $searchocinstanceid);
-
-        // The default api url, gets no instance id in its config setting in tool_opencast.
-        if (empty($endpoint) && $searchocinstanceid == self::get_default_ocinstance()) {
-            $endpoint = get_config('tool_opencast', 'apiurl');
-        }
+        // Get the endpoint url of the default oc instance.
+        $endpoint = get_config('tool_opencast', 'apiurl');
 
         // Check if all requirements are correctly configured.
         if (empty($consumerkey) || empty($consumersecret) || empty($endpoint)) {
