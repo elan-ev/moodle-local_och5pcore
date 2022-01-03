@@ -2,9 +2,9 @@ moodle-local_och5pcore
 =====================
 This local plugin helps to integrate Opencast Video into the Moodle H5P core.
 The main purpose of this plugin is to make it possible for the teachers to select Opencast Video from within the H5P Editor when using H5P Interactive Videos feature.
-In order to achieve this goal, it is necessary to customize Moodle H5P core, which is only possible through extending a theme in Moodle <a href="https://h5p.org/moodle-customization">Moodle Customization</a>. From Moodle 3.10 onwards the H5P Core has the ability to alter H5P via overriding the renderes and hooks <a href="https://tracker.moodle.org/browse/MDL-69087">MDL-69087</a> to add customized scripts and styles into H5P.
-This plugin is designed to overwrite the renderer.php and config.php files of the selected themes and append the necessary codes into these files. This design helps to adapt every installed themes instead of only extending a specific theme.
-Using this integration now enables teachers to select opencast videos in a course, using a dropdown inside the H5P Interactive Videos' editor in course content bank. After selecting the opencast video, another dropdown will be shown to select different types of video flavor (Presenter/Presentation). By selecting the video flavor all available qualities of the video then will be inserted into H5P Editor videos list and the rest will be processed by H5P.
+In order to achieve this goal, it is necessary to customize Moodle H5P core, which is only possible through extending a theme in Moodle <a href="https://h5p.org/moodle-customization">Moodle Customization</a>. From Moodle 3.10 onwards, the H5P Core has the ability to alter H5P via overriding the renderers and hooks <a href="https://tracker.moodle.org/browse/MDL-69087">MDL-69087</a> to add customized scripts and styles into H5P.
+This plugin is designed to overwrite the renderer.php and config.php files of the selected themes and append the necessary codes into these files. This design helps to apply the required extension to every installed theme dynamically, instead of creating an extended theme!
+Using this integration now enables teachers to select opencast videos in a course, using a dropdown inside the H5P Interactive Videos' editor in course content bank. After selecting the opencast video, another dropdown will be shown to select different types of video flavor (Presenter/Presentation). By selecting the video flavor, all available qualities of the video then will be inserted into H5P Editor videos list and the rest will be processed by H5P.
 
 System requirements
 ------------------
@@ -21,21 +21,44 @@ Prerequisites
 
 Features
 ------------------
-* Extend/Remove extensions of several themes at once
-* Display Opencast videos of the course inside H5P Interactive Videos Editor
-* Extract and display Opencast video flavors inside H5P Interactive Videos Editor
-* Extract and use different quality of the Opencast video inside H5P Interactive Videos
-* Opencast LTI authentication (v2.0.0)
+* Extend several themes at once via Moodle's multiselect feature by holding the Ctrl key.
+* Remove extensions applied to several themes at once via Moodle's multiselect feature by holding the Ctrl key.
+* Display Opencast videos of the course inside H5P Interactive Videos Editor.
+* Extract and display Opencast video flavors inside H5P Interactive Videos Editor.
+* Extract and use different quality of the Opencast video inside H5P Interactive Videos.
+* Opencast LTI authentication (v2.0)
 * Getting search endpoint (Engage/Presentation node) from Opencast services (v2.1)
 
-Settings
+How it works
 ------------------
-* In Admin Settings Page, there is the possibility to select multiple available themes to extend.
-* Unselecting a theme will remove the extension changes.
+* In the admin setting page, there is the possibility to select multiple available themes to extend.
+* Deselecting a theme will remove the extension changes.
 * Only videos which are published to opencast engage player, can be displayed and process, because media index of the event must be available.
-* Opencast instance for the search endpoint must be configured in tool_opencast and be selected in the setting. (Deprecated in v2.1)
 * LTI credential can be configured if the "Secure Static Files" in opencast setting is enabled.
+* Opencast instance for the search endpoint must be configured in tool_opencast and be selected in the setting. (Deprecated in v2.1)
 
-Uninstall
+Important for admins to know:
 ------------------
-In case the plugin triggers the uninstall event, all changes to the extended themes will be removed!
+* This plugin creates new files within the Moodle core installation.
+* By extending a theme, the plugin attempts to add own code into the files of selected themes.
+
+How to revert the changes:
+------------------
+* Through the admin setting page, deselecting a theme will revert the changes.
+* Uninstalling the plugin will also trigger the uninstallation event, by which all changes to the extended themes will be removed!
+
+Revert changes manually:
+------------------
+It is possible to revert the changes manually, but it is not recommended doing so. However, the plugin only changes the files as follows:
+* (rootdir) > themes > {your installed theme dir} > renderers.php
+* (rootdir) > themes > {your installed theme dir} > config.php
+Changes made by this plugin can be identified as a code block started with a comment containing "// Added by local_och5pcore plugin" and ends with a comment containing "// End of local_och5pcore code block."
+
+Repair the loss of changes on renderers.php:
+----------------
+In case the changes on renderers.php or even the file itself is gone, the plugin will repeat the changes by itself which can be done simply via admin setting page:
+
+1. Deselect the defected theme, to let the plugin know that the changes should not be there anymore!
+2. Save changes.
+3. Select the defected theme again, to repeat the changes.
+4. Save changes.

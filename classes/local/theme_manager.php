@@ -89,7 +89,7 @@ class theme_manager
                 if (strpos($themerenderer, "theme_{$themename}_core_h5p_renderer") === false) {
 
                     // Append the customized renderer class into the theme renderer content.
-                    $themenewrenderer = str_replace('?>', '', $themerenderer) . "\r\n\r\n" . $renderercontent;
+                    $themenewrenderer = $themerenderer . "\r\n\r\n" . $renderercontent;
 
                     // Make sure that new renderer content contains both current and och5pcore contents.
                     if ($themenewrenderer && strpos($themenewrenderer, $renderercontent) !== false &&
@@ -124,7 +124,7 @@ class theme_manager
             // Check if the theme_overridden_renderer_factory config already exists.
             if (strpos($themeconfigcontent, 'theme_overridden_renderer_factory') === false) {
                 // Append required config option into theme config.
-                $newconfig = str_replace('?>', '', $themeconfigcontent) . "\r\n\r\n" . $configcontent;
+                $newconfig = $themeconfigcontent . "\r\n\r\n" . $configcontent;
                 // Insert the new config contents into the theme config file.
                 file_put_contents("$dir/config.php", $newconfig);
             }
