@@ -26,8 +26,8 @@ Features
 * Display Opencast videos of the course inside H5P Interactive Videos Editor.
 * Extract and display Opencast video flavors inside H5P Interactive Videos Editor.
 * Extract and use different quality of the Opencast video inside H5P Interactive Videos.
-* Opencast LTI authentication (v2.0)
-* Getting search endpoint (Engage/Presentation node) from Opencast services (v2.1)
+* Opencast LTI authentication
+* Getting search endpoint (Engage/Presentation node) from Opencast services
 
 How it works
 ------------------
@@ -35,7 +35,6 @@ How it works
 * Deselecting a theme will remove the extension changes.
 * Only videos which are published to opencast engage player, can be displayed and process, because media index of the event must be available.
 * LTI credential can be configured if the "Secure Static Files" in opencast setting is enabled.
-* Opencast instance for the search endpoint must be configured in tool_opencast and be selected in the setting. (Deprecated in v2.1)
 
 Important for admins to know:
 ------------------
