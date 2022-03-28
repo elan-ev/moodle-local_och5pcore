@@ -26,8 +26,8 @@ defined('MOODLE_INTERNAL') || die;
 
 // Defining this plug-in metadata.
 $plugin->component = 'local_och5pcore';
-$plugin->release = '2.1.1';
-$plugin->version = 2022010300;
+$plugin->release = '2.1.1-r1';
+$plugin->version = 2022032800;
 $plugin->maturity = MATURITY_STABLE;
 $plugin->requires = 2020110900; // Only Moodle v3.10 and above.
 $plugin->dependencies = [
