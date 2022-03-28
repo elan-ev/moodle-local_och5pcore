@@ -1,5 +1,6 @@
 moodle-local_och5pcore
 =====================
+The main purpose of this plugin is to make it possible for the teachers to select Opencast Video from within the H5P Editor when using H5P Interactive Videos feature.<br />
 It provides an easy way to add support for H5P opencast to your site themes. It does this by writing new code into your theme renderer.php and config.php files, adding the code required to allow your theme to render H5P opencast content (as suggested by H5P.org in <a href="https://h5p.org/moodle-customization">Moodle Customization</a>). Your web server process must also have write access to the Moodle installation tree for this plugin to function.<br />
 This design helps to apply the required extension to every installed theme dynamically, instead of creating an extended theme!
 Using this integration now enables teachers to select opencast videos in a course, using a dropdown inside the H5P Interactive Videos' editor in course content bank. After selecting the opencast video, another dropdown will be shown to select different types of video flavor (Presenter/Presentation). By selecting the video flavor, all available qualities of the video then will be inserted into H5P Editor videos list and the rest will be processed by H5P.
