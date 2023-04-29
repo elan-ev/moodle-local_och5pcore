@@ -144,4 +144,19 @@ class video_manager
         // Finally, we return the options array.
         return $options;
     }
+
+    /**
+     * Get all the label texts needed to display to the user.
+     *
+     * @return array
+     */
+    public static function get_ui_strings() {
+        $texts = [
+            'label_course' => get_string('label_course', 'local_och5pcore'),
+            'label_video_file' => get_string('label_video_file', 'local_och5pcore'),
+            'label_video_flavor' => get_string('label_video_flavor', 'local_och5pcore'),
+            'header_text' => get_string('header_text', 'local_och5pcore'),
+        ];
+        return $texts;
+    }
 }
