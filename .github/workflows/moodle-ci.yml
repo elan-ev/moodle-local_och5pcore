@@ -3,7 +3,7 @@ name: Moodle Plugin CI
 on: [push, pull_request]
 
 jobs:
-  test:
+  static:
     runs-on: ubuntu-latest
     name: static on (${{ matrix.moodle-branch }}/${{ matrix.php }}/${{ matrix.database }})
 
