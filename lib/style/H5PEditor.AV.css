@@ -2,11 +2,32 @@
     position: relative;
     height: 1px;
     background: #ccc;
-    margin: 10px;
+    margin: 5px;
+}
+
+.h5p-oc-logo-header {
+    display: table;
+    position: relative;
+    padding-left: 60px;
+    height: 52px;
+}
+.h5p-oc-logo-header .h5p-oc-header-text {
+    display: table-cell;
+    vertical-align: middle;
+    margin: auto !important;
+    padding: 0;
+}
+
+.h5p-oc-logo-header:before {
+    font-family: 'opencast';
+    content: "\0041";
+    position: absolute;
+    left: 5px;
+    font-size: 3em;
 }
 
 .h5p-oc-dialog-box {
-    margin: 20px 5% 10px 5%;
+    margin: 5px 2% 20px 2%;
 }
 
 .h5p-oc-dialog-box .h5p-oc-search-error {
@@ -18,17 +39,11 @@
 }
 
 .h5p-oc-video-wrapper {
+    margin-top: 5px;
     background-color: #f5f5f5;
     border: 1px solid #bbb;
-    padding: 15px 15px 15px 60px;
+    padding: 15px 15px 15px 15px;
     position: relative;
-}
-.h5p-oc-video-wrapper:before {
-    font-family: 'opencast';
-    content: "\0041";
-    position: absolute;
-    left: 5px;
-    font-size: 3em;
 }
 
 .h5p-oc-video-wrapper select {
