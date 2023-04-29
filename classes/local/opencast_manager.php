@@ -27,6 +27,7 @@ namespace local_och5pcore\local;
 
 use tool_opencast\local\api;
 use block_opencast\local\apibridge;
+use \tool_opencast\local\settings_api;
 use oauth_helper;
 use moodle_exception;
 
@@ -56,8 +57,8 @@ class opencast_manager
         // Get an instance of apibridge.
         $apibridge = apibridge::get_instance();
 
-        // Initialize the course videos array.
-        $coursevideos = null;
+        // Initialize the course videos object.
+        $coursevideos = new \stdClass();
 
         // Get series for the course.
         $courseseries = $apibridge->get_course_series($courseid);
@@ -199,12 +200,14 @@ class opencast_manager
 
         // Check if the search service is active and online to make calls.
         if (!empty($searchservice) && $searchservice['active'] && $searchservice['online']) {
+            $defaultocinstanceid = settings_api::get_default_ocinstance()->id;
             // Initialize the custom configs with the search service's host.
             $customconfigs = [
                 'apiurl' => preg_replace(["/\/docs/"], [''], $searchservice['host']),
-                'apiusername' => get_config('tool_opencast', 'apiusername'),
-                'apipassword' => get_config('tool_opencast', 'apipassword'),
-                'apitimeout' => get_config('tool_opencast', 'apitimeout'),
+                'apiusername' => settings_api::get_apiusername($defaultocinstanceid),
+                'apipassword' => settings_api::get_apipassword($defaultocinstanceid),
+                'apitimeout' => settings_api::get_apitimeout($defaultocinstanceid),
+                'apiconnecttimeout' => settings_api::get_apiconnecttimeout($defaultocinstanceid),
             ];
             // Create the tool_opencast api instance with search service's host url.
             $api = api::get_instance(null, [], $customconfigs);
@@ -226,7 +229,8 @@ class opencast_manager
     public static function get_lti_params($courseid) {
         $params = [];
         // Get the endpoint url of the default oc instance.
-        $mainltiendpoint = get_config('tool_opencast', 'apiurl');
+        $defaultocinstanceid = settings_api::get_default_ocinstance()->id;
+        $mainltiendpoint = settings_api::get_apiurl($defaultocinstanceid);
         // Generate lti params for the main oc instance.
         $params['main'] = self::generate_lti_params($courseid, $mainltiendpoint);
         // Get the endpoint url of the search node instance.
