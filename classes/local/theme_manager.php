@@ -27,8 +27,6 @@ namespace local_och5pcore\local;
 
 use core_component;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Theme Manager class contains all related functions to extend and unextend the themes.
  *
@@ -37,8 +35,7 @@ defined('MOODLE_INTERNAL') || die();
  * @author     Farbod Zamani Boroujeni <zamani@elan-ev.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_manager
-{
+class theme_manager {
     /** @var string extension start flag */
     const START_OCH5PCORE_EXTENSION = '// Added by local_och5pcore plugin';
 

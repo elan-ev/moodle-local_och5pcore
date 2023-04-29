@@ -28,8 +28,6 @@ namespace local_och5pcore\local;
 use local_och5pcore\local\opencast_manager;
 use moodle_exception;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Video Manager class contains all related functions to extract and manage opencast course videos.
  *
@@ -38,8 +36,7 @@ defined('MOODLE_INTERNAL') || die();
  * @author     Farbod Zamani Boroujeni <zamani@elan-ev.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class video_manager
-{
+class video_manager {
     /**
      * Get opencast course videos and prepare it to show in dropdown with option tag.
      *

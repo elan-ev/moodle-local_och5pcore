@@ -16,14 +16,12 @@
 
 /**
  * Local och5pcore installtion.
- *  
+ *
  * @package    local_och5pcore
  * @copyright  2021 Farbod Zamani Boroujeni, ELAN e.V.
  * @author     Farbod Zamani Boroujeni <zamani@elan-ev.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die;
 
 use local_och5pcore\local\theme_manager;
 

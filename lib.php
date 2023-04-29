@@ -25,8 +25,6 @@
 
 use local_och5pcore\local\theme_manager;
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
  * Extends and unextends the themes based on the theme selcetion in admi n setting.
  */

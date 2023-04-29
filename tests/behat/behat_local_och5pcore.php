@@ -92,16 +92,15 @@ class behat_local_och5pcore extends behat_base {
     /**
      * Scrolling to an element in och5pcore
      * @Given /^I scroll to "(?P<element_selector_string>(?:[^"]|\\")*)" in och5pcore$/
-     * @param string $elementSelector Element we look for
+     * @param string $elementselector Element we look for
      */
-    public function i_scroll_to_in_och5pcore($elementSelector) {
+    public function i_scroll_to_in_och5pcore($elementselector) {
         $function = <<<JS
-(function(){document.querySelector("$elementSelector").scrollIntoView();})() 
+(function(){document.querySelector("$elementselector").scrollIntoView();})()
 JS;
         try {
             $this->getSession()->executeScript($function);
-        }
-        catch (\moodle_exception $e ) {
+        } catch (\moodle_exception $e ) {
             throw new \moodle_exception('behat_error_unabletofind_element', 'local_och5pcore');
         }
     }

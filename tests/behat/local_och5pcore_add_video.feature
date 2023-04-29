@@ -107,4 +107,3 @@ Feature: Add Opencast Video into H5P Core
     And I switch to "h5p-player" class iframe
     And I switch to "h5p-iframe" class iframe
     And I should see "Interactive Video"
-
