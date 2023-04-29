@@ -65,7 +65,7 @@ jobs:
         if: ${{ steps.cache-checker.outputs.count == 0 }}
         run: composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^3.4.11
 
-      -name: Export moodle-plugin-ci pathes
+      - name: Export moodle-plugin-ci pathes
         run: |
           echo $(cd ci/bin; pwd) >> $GITHUB_PATH
           echo $(cd ci/vendor/bin; pwd) >> $GITHUB_PATH
@@ -188,7 +188,7 @@ jobs:
         if: ${{ steps.cache-checker.outputs.count == 0 }}
         run: composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^3.4.11
 
-      -name: Export moodle-plugin-ci pathes
+      - name: Export moodle-plugin-ci pathes
         run: |
           echo $(cd ci/bin; pwd) >> $GITHUB_PATH
           echo $(cd ci/vendor/bin; pwd) >> $GITHUB_PATH
