@@ -145,10 +145,18 @@ jobs:
       fail-fast: false
       matrix:
         ci-version: ['3.4.11']
-        php: ['7.3', '7.4', '8.0']
+        php: ['7.4', '8.0', '8.1']
         moodle-branch: ['MOODLE_310_STABLE', 'MOODLE_311_STABLE', 'MOODLE_400_STABLE', 'MOODLE_401_STABLE']
         database: ['mariadb', 'pgsql']
-
+        exclude:
+          - moodle-branch: 'MOODLE_310_STABLE'
+            php: '8.0'
+          - moodle-branch: 'MOODLE_310_STABLE'
+            php: '8.1'
+          - moodle-branch: 'MOODLE_311_STABLE'
+            php: '8.1'
+          - moodle-branch: 'MOODLE_400_STABLE'
+            php: '8.1'
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
