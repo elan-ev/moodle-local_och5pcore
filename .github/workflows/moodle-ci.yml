@@ -47,7 +47,7 @@ jobs:
           path: ./ci
           key: composer-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}-cache
           restore-keys: |
-            composer-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}}-cache
+            composer-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}-cache
 
       - name: npm cache
         uses: actions/cache@v3
@@ -55,7 +55,7 @@ jobs:
           path: ~/.npm
           key: node-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}}-cache
           restore-keys: |
-            node-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}}-cache
+            node-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}-cache
 
       - name: Check if the ci directory is empty
         id: cache-checker
@@ -170,7 +170,7 @@ jobs:
           path: ./ci
           key: composer-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}-cache
           restore-keys: |
-            composer-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}}-cache
+            composer-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}-cache
 
       - name: npm cache
         uses: actions/cache@v3
@@ -178,7 +178,7 @@ jobs:
           path: ~/.npm
           key: node-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}}-cache
           restore-keys: |
-            node-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}}-cache
+            node-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}-cache
 
       - name: Check if the ci directory is empty
         id: cache-checker

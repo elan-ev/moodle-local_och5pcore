@@ -18,6 +18,8 @@ Feature: Add Opencast Video into H5P Core
       | apiusername_1       | admin                                                         | tool_opencast   |
       | apipassword_1       | opencast                                                      | tool_opencast   |
       | ocinstances         | [{"id":1,"name":"Default","isvisible":true,"isdefault":true}] | tool_opencast   |
+      | lticonsumerkey      | CONSUMERKEY                                                   | local_och5pcore |
+      | lticonsumersecret   | CONSUMERSECRET                                                | local_och5pcore |
     And I log in as "admin"
     And I setup the opencast video block for the course with och5pcore
     And I get the latest h5p content types
@@ -25,8 +27,6 @@ Feature: Add Opencast Video into H5P Core
     Then I should see "Boost"
     And I set the following fields to these values:
       | Available themes to extend  | Boost           |
-      | LTI Consumer key            | CONSUMERKEY     |
-      | LTI Consumer Secret         | CONSUMERSECRET  |
     And I press "Save changes"
     Then I should see "Changes saved"
     And I log out
