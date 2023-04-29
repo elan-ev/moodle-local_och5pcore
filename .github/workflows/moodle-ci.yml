@@ -20,10 +20,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        ci-version: ['3.4.11']
         php: ['7.4']
         moodle-branch: ['MOODLE_400_STABLE']
         database: [pgsql]
-        ci-version: ['^3']
 
     steps:
       - name: Check out repository code
@@ -40,34 +40,30 @@ jobs:
           coverage: none
 
       - name: Create directories
-        run: |
-          mkdir ci
-          mkdir cache-files
-
-      - name: Check out moodle-plugin-ci for caching purposes
-        uses: actions/checkout@v3
-        with:
-          repository: moodlehq/moodle-plugin-ci
-          path: ci-repo
-          ref: ${{ matrix.ci-version }}
+        run: mkdir ci
 
       - name: Composer cache
         uses: actions/cache@v3
         with:
           path: ./ci
-          key: composer-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}-cache
+          key: composer-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}-${{ matrix.ci-version }}-cache
           restore-keys: |
-            composer-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}-cache
+            composer-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}}-${{ matrix.ci-version }}-cache
 
       - name: npm cache
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: node-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}-cache
+          key: node-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}}-${{ matrix.ci-version }}-cache
           restore-keys: |
-            node-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}-cache
+            node-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}}-${{ matrix.ci-version }}-cache
+
+      -name: Check if the ci directory is empty
+        id: cache-checker
+        run: echo "count=$(ls ./ci | wc -l)" >> $GITHUB_OUTPUT
 
       - name: Initialise moodle-plugin-ci
+        if: ${{ steps.cache-checker.outputs.count == 0 }}
         run: composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ${{ matrix.ci-version }}
 
       -name: Export moodle-plugin-ci pathes
