@@ -38,6 +38,25 @@ jobs:
           ini-values: max_input_vars=5000
           coverage: none
 
+      - name: Create ci directory for cache
+        run: mkdir ci
+
+      - name: Composer cache
+        uses: actions/cache@v3
+        with:
+          path: ./ci
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+
+      - name: npm cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
       - name: Initialise moodle-plugin-ci
         run: |
           composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^3
@@ -134,9 +153,13 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: none
 
+      - name: Create ci directory for cache
+        run: mkdir ci
+
       - name: Composer cache
         uses: actions/cache@v3
         with:
+          path: ./ci
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
