@@ -46,3 +46,10 @@ $string['no_action_error'] = 'Undefined action.';
 $string['no_view_error'] = 'The opencast view capability is not granted.';
 $string['no_lti_config_error'] = 'Unable to perform Opencast LTI authentication in H5P';
 $string['invalidtoken_error'] = 'Invalid token - token not found';
+$string['privacy:metadata'] = 'The H5P Opencast Extension (Core) only works as an integration of Opencast into H5P and store no user data.';
+$string['label_video_file'] = 'Select a video file';
+$string['label_video_flavor'] = 'Select the video\'s flavor and quality';
+$string['label_course'] = 'Select a course';
+$string['header_text'] = 'Opencast Videos';
+$string['behat_error_unabletofind_element'] = 'Unable to locate element in the page';
+

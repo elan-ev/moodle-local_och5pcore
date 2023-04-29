@@ -108,6 +108,13 @@ switch ($action) {
             $data['error'] = $e->getMessage();
         }
         break;
+    case 'loadStrings':
+        try {
+            $data['result'] = video_manager::get_ui_strings();
+        } catch (moodle_exception $e) {
+            $data['error'] = $e->getMessage();
+        }
+        break;
     default:
         $data['error'] = get_string('no_action_error', 'local_och5pcore');
         break;
