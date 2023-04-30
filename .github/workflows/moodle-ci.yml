@@ -128,7 +128,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ci-version: ['3.4.11']
         php: ['7.4', '8.0'] # by the time of writtig this 8.1 is not yet supported by block_opencast
         moodle-branch: ['MOODLE_310_STABLE', 'MOODLE_311_STABLE', 'MOODLE_400_STABLE', 'MOODLE_401_STABLE']
         database: ['mariadb', 'pgsql']
