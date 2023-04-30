@@ -23,12 +23,27 @@ Feature: Add Opencast Video into H5P Core
     And I log in as "admin"
     And I setup the opencast video block for the course with och5pcore
     And I get the latest h5p content types
-    And I navigate to "Plugins > Local plugins > External tool > H5P Opencast Extension (Core)" in site administration
+    And I navigate to "Plugins > Local plugins > H5P Opencast Extension (Core)" in site administration
     Then I should see "Boost"
     And I set the following fields to these values:
       | Available themes to extend  | Boost           |
     And I press "Save changes"
     Then I should see "Changes saved"
+    # Content bank accessibility is different in Moodle version < 4.0, therefore, we need a unified way "via Navigation block"
+    And the following config values are set as admin:
+      | unaddableblocks | | theme_boost|
+    And I am on site homepage
+    And I turn editing mode on
+    And I add the "Navigation" block if not present
+    And I configure the "Navigation" block
+    And I set the following fields to these values:
+      | Page contexts | Display throughout the entire site |
+    And I press "Save changes"
+    And I am on "Course 1" course homepage with editing mode on
+    And I configure the "Navigation" block
+    And I set the following fields to these values:
+      | Display on page types | Any type of course main page |
+    And I press "Save changes"
     And I log out
 
   @javascript @_switch_iframe
@@ -38,8 +53,10 @@ Feature: Add Opencast Video into H5P Core
     # it won't see some of the flags and texts to validate.
     And I change window size to "1366x968"
     And I am on "Course 1" course homepage with editing mode on
+    And I add the "Navigation" block if not present
     And I add the "Opencast Videos" block
-    And I navigate to "Content bank" in current page administration
+    And I expand "Site pages" node
+    And I click on "Content bank" "link"
     Then I should see "Add"
     When I click on "Add" "button"
     And I click on "Interactive Video" "link"
@@ -67,6 +84,7 @@ Feature: Add Opencast Video into H5P Core
     And I scroll to "iframe.h5p-editor-iframe" in och5pcore
     And I switch to "h5p-editor-iframe" class iframe
     And I set the field "Title" to "Test Opencast Video Edited"
+    And I wait "2" seconds
     And I scroll to ".h5p-av-row .h5p-remove" in och5pcore
     When I click on ".h5p-av-row .h5p-remove" "css_element"
     And I should see "Remove file"
@@ -84,7 +102,7 @@ Feature: Add Opencast Video into H5P Core
     And I switch to "h5p-iframe" class iframe
     And I should see "Interactive Video"
     And I switch to the main frame
-    And I navigate to "Course" in current page administration
+    And I am on "Course 1" course homepage
     And I add a "H5P" to section "1"
     Then I set the field "Name" to "H5P with Opencast Video"
     And I click on "Add..." "button" in the "Package file" "form_row"
@@ -94,6 +112,7 @@ Feature: Add Opencast Video into H5P Core
     And I click on "Select this file" "button"
     And I click on "Save and display" "button"
     And I wait until the page is ready
+    And I wait "3" seconds
     And I switch to "h5p-player" class iframe
     And I switch to "h5p-iframe" class iframe
     And I should see "Interactive Video"
@@ -102,7 +121,7 @@ Feature: Add Opencast Video into H5P Core
     Given I log in as "student1"
     And I am on "Course 1" course homepage
     Then I should see "H5P with Opencast Video"
-    When I click on "H5P with Opencast Video" "link"
+    And I click on "li.h5pactivity a.aalink" "css_element"
     And I wait until the page is ready
     And I switch to "h5p-player" class iframe
     And I switch to "h5p-iframe" class iframe
