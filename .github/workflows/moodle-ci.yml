@@ -96,11 +96,18 @@ jobs:
 
       - name: Directory structure
         run: |
+          echo "Root:"
           ls
+          echo "================================"
+          echo "Moodle:"
           ls ./moodle
+          echo "================================"
+          echo "Plugin:"
           ls ./plugin
+          echo "================================"
+          echo "Plugin:"
           ls ./ci
-          ls ./moodledata
+          echo "================================"
 
       - name: PHP Lint
         if: ${{ always() }}
