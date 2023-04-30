@@ -38,27 +38,6 @@ jobs:
           ini-values: max_input_vars=5000
           coverage: none
 
-      - name: Create directories
-        run: |
-          mkdir ci
-          mkdir moodle
-
-      - name: Moodle plugin ci cache
-        uses: actions/cache@v3
-        with:
-          path: ./ci
-          key: ci-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}-cache
-          restore-keys: |
-            ci-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}-cache
-
-      - name: Moodle directory cache
-        uses: actions/cache@v3
-        with:
-          path: ./moodle
-          key: moodle-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}-cache
-          restore-keys: |
-            moodle-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}-cache
-
       - name: npm cache
         uses: actions/cache@v3
         with:
@@ -67,13 +46,8 @@ jobs:
           restore-keys: |
             node-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}-cache
 
-      - name: Check if the ci directory is empty
-        id: cache-checker-ci
-        run: echo "count=$(ls ./ci | wc -l)" >> $GITHUB_OUTPUT
-
       - name: Initialise moodle-plugin-ci
-        if: ${{ steps.cache-checker-ci.outputs.count == 0 }}
-        run: composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^3.4.11
+        run: composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^3
 
       - name: Export moodle-plugin-ci pathes
         run: |
@@ -82,32 +56,12 @@ jobs:
           sudo locale-gen en_AU.UTF-8
           echo "NVM_DIR=$HOME/.nvm" >> $GITHUB_ENV
 
-      - name: Check if the moodle directory is empty
-        id: cache-checker-moodle
-        run: echo "count=$(ls ./moodle | wc -l)" >> $GITHUB_OUTPUT
-
       - name: Install moodle-plugin-ci
-        if: ${{ steps.cache-checker-moodle.outputs.count == 0 }}
         run: |
           moodle-plugin-ci install --plugin ./plugin --db-host=127.0.0.1
         env:
           DB: ${{ matrix.database }}
           MOODLE_BRANCH: ${{ matrix.moodle-branch }}
-
-      - name: Directory structure
-        run: |
-          echo "Root:"
-          ls
-          echo "================================"
-          echo "Moodle:"
-          ls ./moodle
-          echo "================================"
-          echo "Plugin:"
-          ls ./plugin
-          echo "================================"
-          echo "Plugin:"
-          ls ./ci
-          echo "================================"
 
       - name: PHP Lint
         if: ${{ always() }}
@@ -194,17 +148,6 @@ jobs:
           ini-values: max_input_vars=5000
           coverage: none
 
-      - name: Create directories
-        run: mkdir ci
-
-      - name: Moodle plugin ci cache
-        uses: actions/cache@v3
-        with:
-          path: ./ci
-          key: composer-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}-cache
-          restore-keys: |
-            composer-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}-cache
-
       - name: npm cache
         uses: actions/cache@v3
         with:
@@ -213,13 +156,8 @@ jobs:
           restore-keys: |
             node-${{ matrix.php }}-${{ matrix.moodle-branch }}-${{ matrix.database }}-cache
 
-      - name: Check if the ci directory is empty
-        id: cache-checker
-        run: echo "count=$(ls ./ci | wc -l)" >> $GITHUB_OUTPUT
-
       - name: Initialise moodle-plugin-ci
-        if: ${{ steps.cache-checker.outputs.count == 0 }}
-        run: composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^3.4.11
+        run: composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^3
 
       - name: Export moodle-plugin-ci pathes
         run: |
