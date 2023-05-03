@@ -10,9 +10,13 @@ System requirements
 ------------------
 1. Min. Moodle Version: 3.10: <br />From Moodle 3.10 onwards, the H5P Core has the ability to alter H5P via overriding the renderers and hooks <a href="https://tracker.moodle.org/browse/MDL-69087">MDL-69087</a> to add customized scripts and styles into H5P.
 2. Installed plugin:
-   - <a href="https://github.com/Opencast-Moodle/moodle-tool_opencast">tool_opencast</a> (Min. version: <a href="https://github.com/Opencast-Moodle/moodle-tool_opencast/releases/tag/v3.11-r3">v3.11-r3</a>)
-   - <a href="https://github.com/Opencast-Moodle/moodle-block_opencast">block_opencast</a> (Min. version: <a href="https://github.com/Opencast-Moodle/moodle-block_opencast/releases/tag/v3.11-r3">v3.11-r3</a>)
-   - IMPORTANT: You should update the tool_opencast first because otherwise the block_opencast installation will fail.
+   - versions (< v3.0-r1):
+      - <a href="https://github.com/Opencast-Moodle/moodle-tool_opencast">tool_opencast</a> (Min. version: <a href="https://github.com/Opencast-Moodle/moodle-tool_opencast/releases/tag/v3.11-r3">v3.11-r3</a> & Max. version (v3.11-r8))
+      - <a href="https://github.com/Opencast-Moodle/moodle-block_opencast">block_opencast</a> (Min. version: <a href="https://github.com/Opencast-Moodle/moodle-block_opencast/releases/tag/v3.11-r3">v3.11-r3</a> & Max. version (v3.11-r8))
+      - IMPORTANT: You should update the tool_opencast first because otherwise the block_opencast installation will fail.
+   - version (> v3.0-r1):
+      - <a href="https://github.com/Opencast-Moodle/moodle-tool_opencast">tool_opencast</a> (Min. version: <a href="https://github.com/Opencast-Moodle/moodle-tool_opencast/releases/tag/v4.0-r1">v4.0-r1</a>)
+      - <a href="https://github.com/Opencast-Moodle/moodle-block_opencast">block_opencast</a> (Min. version: <a href="https://github.com/Opencast-Moodle/moodle-block_opencast/releases/tag/v4.0-r1">v4.0-r1</a>)
 
 Prerequisites
 ------------------
